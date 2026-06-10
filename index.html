@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riches - Wealth Management & AI Companion</title>
+  <meta name="description" content="A premium glassmorphic portal to manage personal budgeting, analyze stock markets, check gold rates, search real estate yields, and consult Bedoor, your AI financial advisor.">
+  
+  <!-- Google Fonts for premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+
+  <!-- Premium Logo Loading Splash Screen -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-container">
+      <!-- Outer Rotating Spinner Ring based on Logo -->
+      <div class="logo-spinner-ring">
+        <div class="spinner-segment spinner-segment-1"></div>
+        <div class="spinner-segment spinner-segment-2"></div>
+        <div class="spinner-segment spinner-segment-3"></div>
+        <!-- Mascot Image in the Center -->
+        <div class="spinner-inner-avatar">
+          <img src="miss_bindur.png" alt="Ask Bedoor Loading">
+        </div>
+      </div>
+      
+      <!-- Brand & Status -->
+      <div class="splash-text-group">
+        <div class="splash-logo-wordmark">
+          <img src="riches.jpg" alt="Riches" class="splash-logo">
+          <span class="splash-brand-title">RICHES</span>
+        </div>
+        <p class="splash-loading-text" id="lbl-splash-loading">Connecting to Ask Bedoor...</p>
+      </div>
+      
+      <!-- Progress Bar Indicator -->
+      <div class="splash-progress-wrapper">
+        <div class="splash-progress-bar">
+          <div class="splash-progress-fill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Glassmorphic Ambient Glows -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- Outer Dashboard Page Wrapper (Page 1) -->
+  <div class="dashboard-page-wrapper" id="app-main-view">
+    
+    <!-- Hidden elements kept for JS compatibility -->
+    <span class="hidden" id="riches-main-logo" style="display:none"></span>
+    <span class="hidden" id="brand-tagline" style="display:none"></span>
+    <span class="hidden" id="global-search-input" style="display:none"></span>
+    <span class="hidden" id="search-clear-btn" style="display:none"></span>
+    <span class="hidden" id="search-suggestions" style="display:none"></span>
+    <span class="hidden" id="btn-login-open" style="display:none"></span>
+    <span class="hidden" id="btn-signup-open" style="display:none"></span>
+    <span class="hidden" id="user-logged-badge" style="display:none"></span>
+    <span class="hidden" id="logged-user-name" style="display:none"></span>
+    <span class="hidden" id="btn-logout" style="display:none"></span>
+    <span class="hidden" id="header-language-toggle-btn" style="display:none"><span class="lang-text"></span></span>
+    <span class="hidden" id="tab-all" style="display:none"></span>
+    <span class="hidden" id="tab-individual" style="display:none"><span class="tab-label" id="lbl-tab-all"></span></span>
+    <span class="hidden" id="tab-investment" style="display:none"><span class="tab-label" id="lbl-tab-individual"></span></span>
+    <span class="hidden" id="tab-business" style="display:none"><span class="tab-label" id="lbl-tab-investment"></span></span>
+    <span class="hidden" id="tab-admin" style="display:none"><span class="tab-label" id="lbl-tab-business"></span></span>
+    <span class="hidden" id="lbl-tab-admin" style="display:none"></span>
+    <span class="hidden" id="drawer-language-toggle-btn" style="display:none"><span class="lang-text"></span></span>
+    <div class="hidden" id="dashboard-view-header" style="display:none">
+      <h1 id="dashboard-view-title"></h1>
+      <p id="dashboard-view-desc"></p>
+    </div>
+
+    <!-- Full-screen Dashboard Content -->
+    <main class="dashboard-content" id="dashboard-content-area">
+      <!-- Dashboard components dynamically loaded by app.js -->
+    </main>
+
+  </div>
+
+  <!-- Floating Mascot AI Button (Left Bottom) -->
+  <button id="floating-mascot-trigger" class="floating-mascot-btn" aria-label="Open Chat with Ask Bedoor">
+    <div class="floating-mascot-avatar-wrapper">
+      <img src="miss_bindur.png" alt="Ask Bedoor AI">
+      <div class="mascot-online-dot"></div>
+    </div>
+    <div class="mascot-tooltip" id="lbl-mascot-tooltip">Chat with Ask Bedoor</div>
+  </button>
+
+  <!-- Slide-Out Chat Overlay Panel (Page 2 - Collapsible) -->
+  <div id="chat-overlay-pane" class="chat-overlay-container">
+    <div class="chat-drawer-backdrop" id="chat-pane-backdrop"></div>
+    
+    <div class="chat-drawer-content">
+      <!-- ChatGPT-Style Sidebar Inside Drawer -->
+      <aside class="chat-sidebar" id="drawer-sidebar">
+        <!-- Sidebar Header row: New Chat + Close Chat (mobile) -->
+        <div class="sidebar-top-row">
+          <button class="new-chat-btn" id="btn-new-chat" aria-label="Start New Chat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span id="lbl-new-chat">New Chat</span>
+          </button>
+          <button class="sidebar-close-chat-btn" id="btn-sidebar-close-chat" aria-label="Close Chat">
+            <span id="lbl-sidebar-close-chat">Close Chat</span> &times;
+          </button>
+        </div>
+
+        <!-- Auth buttons in sidebar -->
+        <div class="sidebar-auth-group" id="sidebar-auth-guest">
+          <button class="sidebar-auth-btn outline" id="btn-sidebar-login">Login</button>
+          <button class="sidebar-auth-btn solid" id="btn-sidebar-signup">Sign Up</button>
+        </div>
+        <div class="sidebar-auth-group hidden" id="sidebar-auth-logged">
+          <div class="user-status-dot" style="display:inline-block;vertical-align:middle;margin-right:6px"></div>
+          <span id="sidebar-logged-email" style="font-size:13px;color:var(--text-sub)">user@riches.com</span>
+          <button class="sidebar-auth-btn outline" id="btn-sidebar-logout" style="margin-top:6px">Logout</button>
+        </div>
+
+        <!-- Past Chats -->
+        <div class="sidebar-section">
+          <h3 id="lbl-sidebar-history">Recent Chats</h3>
+          <div class="chats-history-list" id="sidebar-chats-list">
+            <!-- Dynamic chats list loaded by JS -->
+          </div>
+        </div>
+
+        <!-- Sidebar footer utilities -->
+        <div class="sidebar-footer">
+          <!-- Theme switch button -->
+          <button id="theme-toggle-btn" class="footer-action-btn" aria-label="Toggle Theme">
+            <svg class="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg class="theme-icon-light hidden" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <span id="lbl-toggle-theme">Light Mode</span>
+          </button>
+
+          <!-- Drawer Language Button -->
+          <button id="drawer-language-toggle-btn" class="footer-action-btn" aria-label="Toggle Language">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <span class="lang-text">العربية</span>
+          </button>
+
+          <!-- Profile -->
+          <div class="user-profile-bar">
+            <div class="user-avatar">UR</div>
+            <span class="user-name" id="lbl-profile-guest">Guest Account</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ChatGPT-Style Main Chat Frame -->
+      <section class="chat-workspace">
+        <header class="workspace-header">
+          <div class="logo-group">
+            <button class="sidebar-hamburger-btn" id="btn-sidebar-toggle" aria-label="Toggle Sidebar">
+              <span></span><span></span><span></span>
+            </button>
+            <img src="riches.jpg" alt="Riches AI" class="header-logo">
+            <span class="header-brand-name">RICHES <span class="brand-badge">AI</span></span>
+          </div>
+          <div class="workspace-header-right">
+            <!-- Auth Buttons inside Chat overlay header -->
+            <div class="auth-buttons-group chat-auth-buttons">
+              <button class="auth-btn outline" id="btn-chat-login-open">Login</button>
+              <button class="auth-btn solid" id="btn-chat-signup-open">Sign Up</button>
+              <div class="logged-user-badge hidden" id="chat-user-logged-badge">
+                <span class="user-status-dot"></span>
+                <span id="chat-logged-user-name">user@riches.com</span>
+                <button id="btn-chat-logout" class="logout-link">Logout</button>
+              </div>
+            </div>
+            <!-- Close button to return back to dashboard -->
+            <button class="close-chat-pane-btn" id="btn-close-chat-pane" aria-label="Close Chat">
+              <span id="lbl-close-chat">Close Chat</span> &times;
+            </button>
+          </div>
+        </header>
+
+        <!-- Message view content -->
+        <div class="chat-scroll-area" id="chat-canvas">
+          
+          <!-- Welcome chatbot Screen -->
+          <section class="welcome-screen" id="chat-welcome-screen">
+            <div class="mascot-logo-frame">
+              <img src="miss_bindur.png" alt="Ask Bedoor" id="lady-mascot-img">
+              <div class="avatar-glow"></div>
+            </div>
+            <h1 id="welcome-title">Ask Bedoor</h1>
+            <p class="welcome-subtitle" id="welcome-subtitle-text"></p>
+
+            <!-- Hidden stubs kept for JS translation references -->
+            <div id="welcome-suggestions" style="display:none">
+              <span id="card-title-ind"></span><span id="card-desc-ind"></span>
+              <span id="card-title-inv"></span><span id="card-desc-inv"></span>
+              <span id="card-title-bus"></span><span id="card-desc-bus"></span>
+            </div>
+          </section>
+
+          <!-- Bubbles list -->
+          <div class="messages-feed-container hidden" id="chat-messages-container">
+            <!-- bubbles go here -->
+          </div>
+        </div>
+
+        <!-- Chat Input Footer -->
+        <footer class="workspace-footer">
+          <div class="input-form-container">
+            <form id="chat-input-form" onsubmit="return false;">
+              <textarea id="chat-message-input" rows="1" placeholder="Ask Bedoor..." autocomplete="off"></textarea>
+              <button type="submit" id="chat-send-btn" aria-label="Send Prompt">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </form>
+          </div>
+          <p class="footer-privacy-note" id="lbl-disclaimer">Riches AI Assistant is a simulated workspace. Do not upload sensitive credentials.</p>
+        </footer>
+      </section>
+    </div>
+  </div>
+
+  <!-- Authentication Modals -->
+
+  <!-- LOGIN -->
+  <div class="modal hidden" id="modal-login">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="btn-login-close">&times;</button>
+      <form class="auth-form" id="form-login" onsubmit="return false;">
+        <h2 id="lbl-login-heading">Login to Riches</h2>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="login-email" required placeholder="name@domain.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="auth-submit-btn" id="btn-login-submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SIGNUP -->
+  <div class="modal hidden" id="modal-signup">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="btn-signup-close">&times;</button>
+      <form class="auth-form" id="form-signup" onsubmit="return false;">
+        <h2 id="lbl-signup-heading">Create Riches Account</h2>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="signup-username" required placeholder="JohnDoe">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="signup-email" required placeholder="name@domain.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signup-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="auth-submit-btn" id="btn-signup-submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Dynamic Image Lightbox (zoom listings) -->
+  <div id="image-lightbox" class="lightbox hidden">
+    <div class="lightbox-overlay"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="btn-lightbox-close">&times;</button>
+      <img src="" id="lightbox-img" alt="Enlarged view">
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="app.js" type="module"></script>
+</body>
+</html>
