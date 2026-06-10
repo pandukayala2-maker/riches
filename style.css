@@ -1334,9 +1334,9 @@ body.light-theme .form-group input, body.light-theme .form-group select, body.li
   position: fixed;
   bottom: 30px;
   left: 30px;
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-round);
+  width: auto;
+  height: 56px;
+  border-radius: 30px;
   background: #0A0A0D;
   border: 2px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 15px var(--brand-red-glow);
@@ -1344,6 +1344,8 @@ body.light-theme .form-group input, body.light-theme .form-group select, body.li
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
+  padding: 0 18px 0 6px;
   z-index: 998;
   transition: all var(--transition-spring);
 }
@@ -1351,6 +1353,8 @@ body.light-theme .form-group input, body.light-theme .form-group select, body.li
 html[dir="rtl"] .floating-mascot-btn {
   left: auto;
   right: 30px;
+  padding: 0 6px 0 18px;
+  flex-direction: row-reverse;
 }
 
 .floating-mascot-btn:hover {
@@ -1361,11 +1365,12 @@ html[dir="rtl"] .floating-mascot-btn {
 
 .floating-mascot-avatar-wrapper {
   position: relative;
-  width: 58px;
-  height: 58px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-round);
   overflow: hidden;
   background: transparent;
+  flex-shrink: 0;
 }
 .floating-mascot-avatar-wrapper img {
   width: 100%;
@@ -1386,33 +1391,21 @@ html[dir="rtl"] .floating-mascot-btn {
 }
 
 .mascot-tooltip {
-  position: absolute;
-  left: calc(100% + 14px);
-  background: #111116;
-  border: 1px solid var(--border-color);
-  padding: 6px 14px;
-  border-radius: var(--radius-sm);
+  position: static;
+  background: transparent;
+  border: none;
+  padding: 0;
   color: white;
   font-family: inherit;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(-10px);
-  transition: all var(--transition-fast);
-  box-shadow: var(--shadow-card);
-}
-
-html[dir="rtl"] .mascot-tooltip {
-  left: auto;
-  right: calc(100% + 14px);
-  transform: translateX(10px);
-}
-
-.floating-mascot-btn:hover .mascot-tooltip {
   opacity: 1;
-  transform: translateX(0);
+  pointer-events: none;
+  transform: none;
+  transition: none;
+  box-shadow: none;
+  letter-spacing: 0.3px;
 }
 
 /* ==========================================================================
