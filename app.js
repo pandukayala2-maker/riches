@@ -213,7 +213,7 @@ const translations = {
 // Global State
 const state = {
   lang: "en",
-  theme: "dark",
+  theme: "light",
   activeTab: "all",
   adminActiveSub: "expenses",
   currentUser: null,
@@ -415,13 +415,18 @@ function toggleTheme() {
 }
 
 function initTheme() {
-  const savedTheme = localStorage.getItem("riches_theme");
+  const savedTheme = localStorage.getItem("riches_theme") || "light";
+  state.theme = savedTheme;
   if (savedTheme === "light") {
-    state.theme = "light";
     document.body.classList.remove("dark-theme");
     document.body.classList.add("light-theme");
     document.querySelector(".theme-icon-dark").classList.add("hidden");
     document.querySelector(".theme-icon-light").classList.remove("hidden");
+  } else {
+    document.body.classList.add("dark-theme");
+    document.body.classList.remove("light-theme");
+    document.querySelector(".theme-icon-dark").classList.remove("hidden");
+    document.querySelector(".theme-icon-light").classList.add("hidden");
   }
 }
 
