@@ -1828,22 +1828,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   
-  // Language button clicks
-  document.getElementById("header-language-toggle-btn").onclick = () => {
+  // Language toggle — single handler shared by all lang buttons
+  function toggleLanguage() {
     state.lang = state.lang === "en" ? "ar" : "en";
     document.documentElement.dir = state.lang === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = state.lang;
     translateUI();
     updateAuthHeaderState();
-  };
-  
-  document.getElementById("drawer-language-toggle-btn").onclick = () => {
-    state.lang = state.lang === "en" ? "ar" : "en";
-    document.documentElement.dir = state.lang === "ar" ? "rtl" : "ltr";
-    document.documentElement.lang = state.lang;
-    translateUI();
-    updateAuthHeaderState();
-  };
+  }
+
+  // Wire every language button (sidebar drawer + hidden stub)
+  document.querySelectorAll("#drawer-language-toggle-btn, #header-language-toggle-btn").forEach(btn => {
+    btn.onclick = toggleLanguage;
+  });
   
   // New chat reset
   document.getElementById("btn-new-chat").onclick = createNewChat;
