@@ -347,7 +347,6 @@ body.light-theme .bg-glow {
   width: 168px;
   height: 168px;
   border-top-color: var(--brand-red);
-  animation: spinRing 2.2s linear infinite;
   box-shadow: 0 0 18px rgba(209, 10, 20, 0.18);
 }
 
@@ -355,15 +354,13 @@ body.light-theme .bg-glow {
   width: 184px;
   height: 184px;
   border-bottom-color: rgba(209, 10, 20, 0.4);
-  animation: spinRing 1.6s linear infinite reverse;
 }
 
 .hub-ring-3 {
   width: 198px;
   height: 198px;
-  border-left-color: rgba(255, 255, 255, 0.1);
-  border-right-color: rgba(255, 255, 255, 0.04);
-  animation: spinRing 4s linear infinite;
+  border-left-color: rgba(209, 10, 20, 0.15);
+  border-right-color: rgba(209, 10, 20, 0.08);
 }
 
 .hub-logo-core {
