@@ -2531,66 +2531,75 @@ html[dir="rtl"] .toast {
 }
 
 @media (max-width: 768px) {
-  .app-header {
-    height: 70px;
-    padding: 0 20px;
-  }
-  .dashboard-body-container {
-    margin-top: 90px;
-  }
-  .logo-text {
-    display: none;
-  }
-  .header-search-container {
-    display: none;
+
+  /* ── Chat overlay: full screen ── */
+  .chat-overlay-container {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
   }
 
-  /* Hide Login/Sign Up inside chat header on mobile — moved to sidebar */
-  .chat-auth-buttons {
-    display: none !important;
+  .chat-drawer-content {
+    width: 100% !important;
+    max-width: 100vw !important;
+    flex-direction: column;
   }
 
-  /* Compact workspace header on mobile */
-  .workspace-header {
-    padding: 0 16px;
-  }
-
-  /* Show Close Chat inside sidebar on mobile */
-  .sidebar-close-chat-btn {
-    display: flex;
-  }
-  
+  /* ── Sidebar: hidden off-screen, slides in ── */
   .chat-sidebar {
     position: fixed;
     top: 0;
-    left: -270px;
+    left: -280px;
+    width: 260px;
     height: 100vh;
-    box-shadow: 12px 0 35px rgba(0,0,0,0.6);
-    z-index: 150;
-    transition: transform 0.3s ease;
+    z-index: 300;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.18);
+    transition: left 0.3s ease;
+    overflow-y: auto;
   }
   html[dir="rtl"] .chat-sidebar {
     left: auto;
-    right: -270px;
-    box-shadow: -12px 0 35px rgba(0,0,0,0.6);
+    right: -280px;
+    transition: right 0.3s ease;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+    border-right: none;
+    border-left: 1px solid var(--border-color);
   }
 
-  body.sidebar-open .chat-sidebar {
-    transform: translateX(270px);
-  }
-  html[dir="rtl"] body.sidebar-open .chat-sidebar {
-    transform: translateX(-270px);
-  }
+  body.sidebar-open .chat-sidebar { left: 0; }
+  html[dir="rtl"] body.sidebar-open .chat-sidebar { right: 0; left: auto; }
 
-  /* Overlay behind open sidebar on mobile */
+  /* Dark overlay when sidebar open */
   body.sidebar-open::after {
     content: '';
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 140;
+    background: rgba(0,0,0,0.4);
+    z-index: 299;
   }
 
+  /* ── Workspace fills full width ── */
+  .chat-workspace {
+    width: 100% !important;
+    min-width: 0;
+  }
+
+  /* ── Header: hamburger + logo + close only ── */
+  .workspace-header {
+    padding: 0 14px;
+    height: 56px;
+  }
+
+  .chat-auth-buttons { display: none !important; }
+
+  .header-brand-name {
+    font-size: 15px;
+  }
+
+  /* ── Show Close Chat button in sidebar on mobile ── */
+  .sidebar-close-chat-btn { display: flex; }
+
+  /* ── Hamburger ── */
   .sidebar-hamburger-btn {
     display: flex;
     flex-direction: column;
@@ -2598,8 +2607,9 @@ html[dir="rtl"] .toast {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
-    margin-right: 8px;
+    padding: 6px;
+    margin-right: 6px;
+    flex-shrink: 0;
   }
   .sidebar-hamburger-btn span {
     display: block;
@@ -2607,5 +2617,60 @@ html[dir="rtl"] .toast {
     height: 2px;
     background: var(--text-main);
     border-radius: 2px;
+  }
+
+  /* ── Welcome screen: tighter layout ── */
+  .welcome-screen {
+    padding: 24px 16px 16px;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .mascot-logo-frame {
+    width: 120px !important;
+    height: 120px !important;
+    margin-bottom: 14px !important;
+  }
+
+  #welcome-title {
+    font-size: 22px !important;
+  }
+
+  /* ── Suggestion cards ── */
+  .suggestion-card {
+    padding: 12px 14px;
+  }
+
+  /* ── Message bubbles ── */
+  .message-bubble {
+    max-width: 82vw;
+    font-size: 14px;
+  }
+
+  /* ── Input footer ── */
+  .workspace-footer {
+    padding: 12px 0 16px;
+  }
+
+  .input-form-container {
+    width: 92%;
+  }
+
+  /* ── RICHES hub: full screen center ── */
+  .hub-ring-system {
+    width: 160px;
+    height: 160px;
+  }
+  .hub-logo-core {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  .hub-ring-1 { width: 130px; height: 130px; }
+  .hub-ring-2 { width: 144px; height: 144px; }
+  .hub-ring-3 { width: 157px; height: 157px; }
+
+  /* ── Sidebar auth group ── */
+  .sidebar-auth-group {
+    padding: 10px 0 4px;
   }
 }
