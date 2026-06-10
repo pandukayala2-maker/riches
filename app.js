@@ -1296,11 +1296,8 @@ function openCategoryInChat(value) {
   }, 350);
 }
 
-// Sub-module click → navigate to tab + scroll to section
+// Sub-module click → confirm in chat, stay in chat (no background navigation)
 window.handleSubModuleClick = function(subValue) {
-  const nav = subModuleNav[subValue];
-  if (!nav) return;
-
   const subLabels = {
     en: { ind_expenses: "Personal Expenses", ind_salary: "Salary Management", ind_grocery: "Grocery Management",
           inv_stocks: "Live Stock", inv_estate: "Real Estate", inv_gold: "Gold & Silver", inv_opp: "Business Opportunities",
@@ -1312,16 +1309,11 @@ window.handleSubModuleClick = function(subValue) {
 
   sendUserMessage(subLabels[state.lang][subValue] || subValue);
 
-  setTab(nav.tab);
-
   setTimeout(() => {
-    if (nav.anchor) {
-      const el = document.getElementById(nav.anchor);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    const label = subLabels[state.lang][subValue] || subValue;
     const doneMsg = state.lang === "en"
-      ? `Opening **${subLabels.en[subValue]}** for you.`
-      : `جاري فتح **${subLabels.ar[subValue]}**.`;
+      ? `**${label}** — Coming soon. Stay tuned!`
+      : `**${label}** — قريباً. ترقّبوا التحديث!`;
     sendBotMessage(doneMsg);
   }, 400);
 };
@@ -1467,27 +1459,16 @@ function processChatbotCommand(userText) {
     let options = [];
     
     if (query.match(/(ind|individual|شخصي)/)) {
-      setTab("individual");
       botReply = dict.bot_individual_desc;
-      options = [
-        { label: state.lang === 'en' ? "Simulate budget" : "توزيع الميزانية", value: "check_expenses" },
-        { label: state.lang === 'en' ? "Open grocery list" : "عرض قائمة التسوق", value: "check_grocery" }
-      ];
+      options = subModules.individual[state.lang];
     }
     else if (query.match(/(invest|investment|استثمار)/)) {
-      setTab("investment");
       botReply = dict.bot_investment_desc;
-      options = [
-        { label: state.lang === 'en' ? "Gold prices today" : "أسعار الذهب اللحظية", value: "check_gold" },
-        { label: state.lang === 'en' ? "Simulate Stocks" : "أسعار الأسهم المباشرة", value: "check_stocks" }
-      ];
+      options = subModules.investment[state.lang];
     }
     else if (query.match(/(bus|business|أعمال)/)) {
-      setTab("business");
       botReply = dict.bot_business_desc;
-      options = [
-        { label: state.lang === 'en' ? "Verify Credit Limit" : "التقييم الائتماني للشركة", value: "check_credit" }
-      ];
+      options = subModules.business[state.lang];
     }
     else {
       botReply = state.lang === 'en'
@@ -1505,51 +1486,27 @@ function processChatbotCommand(userText) {
   }, 500);
 }
 
-// Actions clicks inside chatbot reply bubbles (Auto-navigates and closes panel!)
+// Actions clicks inside chatbot reply bubbles — stay in chat, confirm only
 window.handleCustomAction = function(actionCode) {
-  const dict = translations[state.lang];
-  
-  // 1. Close chat overlay drawer so user can examine dashboard
-  document.body.classList.remove("chat-open");
-  
-  let targetTab = "all";
-  let cardAnchorId = "";
-  
-  if (actionCode === "check_expenses") {
-    targetTab = "individual";
-    cardAnchorId = "card-ind-expenses";
-  } else if (actionCode === "check_grocery") {
-    targetTab = "individual";
-    cardAnchorId = "card-ind-grocery";
-  } else if (actionCode === "calc_salary") {
-    targetTab = "individual";
-    cardAnchorId = "card-ind-salary";
-  } else if (actionCode === "check_gold") {
-    targetTab = "investment";
-    cardAnchorId = "card-inv-gold";
-  } else if (actionCode === "check_stocks") {
-    targetTab = "investment";
-    cardAnchorId = "card-inv-stocks";
-  } else if (actionCode === "check_credit") {
-    targetTab = "business";
-    cardAnchorId = "card-bus-credit";
-  } else if (actionCode === "check_invoices") {
-    targetTab = "business";
-    cardAnchorId = "card-bus-finance";
-  }
-  
-  // 2. Jump to tab
-  setTab(targetTab);
-  
-  // 3. Scroll and highlight dashboard card
-  setTimeout(() => {
-    const targetEl = document.getElementById(cardAnchorId);
-    if (targetEl) {
-      targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
-      targetEl.classList.add("search-highlight");
-      setTimeout(() => targetEl.classList.remove("search-highlight"), 3000);
+  const labels = {
+    en: {
+      check_expenses: "Personal Expenses", check_grocery: "Grocery Management",
+      calc_salary: "Salary Management", check_gold: "Gold & Silver",
+      check_stocks: "Live Stock", check_credit: "Credit Management",
+      check_invoices: "Finance Management"
+    },
+    ar: {
+      check_expenses: "المصاريف الشخصية", check_grocery: "إدارة البقالة",
+      calc_salary: "إدارة الراتب", check_gold: "الذهب والفضة",
+      check_stocks: "الأسهم الحية", check_credit: "الإدارة الائتمانية",
+      check_invoices: "الإدارة المالية"
     }
-  }, 400);
+  };
+  const label = labels[state.lang][actionCode] || actionCode;
+  const msg = state.lang === "en"
+    ? `**${label}** — Coming soon. Stay tuned!`
+    : `**${label}** — قريباً. ترقّبوا التحديث!`;
+  sendBotMessage(msg);
 };
 
 // Sidebar chats history
