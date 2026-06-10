@@ -35,6 +35,7 @@ const translations = {
     // Splash
     lbl_splash_loading: "Connecting to Ask Bedoor...",
     lbl_mascot_tooltip: "Ask Bedoor",
+    download_ppt: "Download Presentation",
     lbl_close_chat: "Close Chat",
     lbl_new_chat: "New Chat",
     lbl_sidebar_history: "Recent Chats",
@@ -137,6 +138,7 @@ const translations = {
     // Splash
     lbl_splash_loading: "جاري الاتصال ببيدور...",
     lbl_mascot_tooltip: "اسأل بيدور",
+    download_ppt: "تحميل العرض التقديمي",
     lbl_close_chat: "إغلاق المحادثة",
     lbl_new_chat: "محادثة جديدة",
     lbl_sidebar_history: "المحادثات السابقة",
@@ -479,6 +481,10 @@ function renderAllPortfolio(dict) {
           <img src="riches.jpg" alt="Riches" class="hub-logo-img">
         </div>
       </div>
+      <button id="btn-download-ppt" class="download-ppt-btn" onclick="generateRichesPPT()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        ${dict.download_ppt || 'Download Presentation'}
+      </button>
     </div>
   `;
 }
